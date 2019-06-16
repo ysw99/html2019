@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>走近镇远</title>
+</head>
+<style type="text/css" media="screen">
+ .iestars{
+      position:absolute;
+      top:00px; left:00px;
+      height:50px;
+      width:50px;
+      padding-top:15px;
+      text-align:center;
+      display:none;
+    }
+#kaitou{
+    border: 1px solid black;
+    width:100%;
+    height:60px;
+    font-family:楷体;
+    font-size:50px;
+    background-color:white;
+
+}
+#didianjianjie{
+
+    width:400px;
+    height:550px;
+    font-family:楷体;
+    float: left;
+    margin-left:25%;
+      margin-top:100px;
+
+}
+#didianjianjietupian{
+
+    width:400px;
+    height:300px;
+    margin-left:55%;
+    border-radius: 36px;
+    background-image:url('镇远1.jpg');
+    background-size:100% 100%;
+    margin-top:150px;
+
+}
+#shishujizaitupian{
+
+    width:400px;
+    height:300px;
+font-family:楷体;
+    float: left;
+    margin-left:55%;
+     border-radius: 36px;
+     margin-top:-800px;
+      background-image:url('55.jpg');
+    background-size:100% 100%;
+
+}
+#shishujizai{
+
+    width:400px;
+    height:800px;
+    margin-left:25%;
+    margin-top:250px;
+    font-family:楷体;
+
+}
+#shishujizai1{
+
+    width:1400px;
+    height:1000px;
+    margin-left:15%;
+    margin-top:150px;
+    font-family:楷体;
+
+
+
+}
+#shishujizaitupian1{
+
+    width:400px;
+    height:300px;
+    margin-left:55%;
+     border-radius: 36px;
+    margin-top:-1600px;
+     background-image:url('66.jpg');
+    background-size:100% 100%;
+
+
+
+}
+
+}
+#shishujizaitupian2{
+
+    width:400px;
+    height:300px;
+
+    float: left;
+    margin-left:55%;
+     border-radius: 36px;
+    margin-top:-500px;
+     background-image:url('55.jpg');
+    background-size:100% 100%;
+
+
+
+}
+#A{
+    width:800px;
+    height:450px;
+
+     margin-left:32%;
+     margin-bottom:20px;
+       background-image:url('44.jpg');
+    background-size:100% 100%;
+
+}
+#B{
+
+    width:400px;
+    height:1000px;
+    float: left;
+
+}
+#C{
+       width:800px;
+    height:450px;
+
+     margin-left:32%;
+     margin-top:0%;
+       background-image:url('33.jpg');
+    background-size:100% 100%;
+    }
+span{
+     font-family:黑体;
+    font-size:30px;
+}
+body{
+    background-color:#BBFFFF;
+}
+ img{
+        position:absolute;
+        top:0px;
+        left:0px;
+        filter:alpha(opacity=40);
+      }
+
+</style>
+<script language="JavaScript">
+
+    var bubble={
+       imgsrc : "img/1.gif",
+       Amount : 15,
+       my : 10,     //初始位置
+       mx : 10,      //初始位置
+       Ypos : [],  //y数组，记录图片的位置
+       Xpos : [],  //x数组
+       Speed :[],  //上升速度
+       size : [], //范围
+       sizegrow :[],   //增长速度
+       angle :[],  //余弦曲线的角度
+       anglegrow :[],  //每次余弦曲线角度变化
+       img:"",
+    }
+
+    //鼠标事件
+    document.onmousemove=MouseMove;
+
+    function MouseMove(){
+      bubble.my = event.y-20;
+      bubble.mx = event.x;
+    }
+
+    //初始化数据
+    for (i = 0; i < bubble.Amount; i++){
+      bubble.Ypos[i] = bubble.my-20;
+      bubble.Xpos[i] = bubble.mx;
+      bubble.Speed[i] = Math.random()*1+3;   //速度在[1,4)
+      bubble.angle[i] = 0;
+      bubble.anglegrow[i] = Math.random()*0.5+0.1;   //角度变换[0.2,0.6)
+      bubble.size[i] = 8;
+      bubble.sizegrow[i] = Math.random()*1+2;    //尺寸变换[0.5,0.6)
+    }
+
+    for (i = 0; i < bubble.Amount; i++){
+      bubble.img+='<img class="si" src="' + bubble.imgsrc + '" >';
+    }
+    var low=document.getElementById("low");
+    low.innerHTML=bubble.img;
+    var si=document.getElementsByTagName("img");
+
+    //创建冒泡程序
+
+    function MouseBubbles(){
+          for (var i = 0; i < bubble.Amount; i++){
+
+            bubble.Ypos[i] += bubble.Speed[i] * (-1)
+            bubble.Xpos[i] += bubble.Speed[i] * Math.cos(bubble.angle[i]); ;
+
+              if(bubble.Ypos[i]<-25){//当到达最上方后，重新初始化
+                bubble.Ypos[i] = bubble.my;
+                bubble.Xpos[i] = bubble.mx;
+                bubble.Speed[i] = Math.random() * 4 + 1;
+                bubble.size[i] = 8;    //初始尺寸，上限25
+              }
+
+        console.log(si[i]+"  "+i);
+            si[i].style.left = bubble.Xpos[i];   //左右变化
+
+            si[i].style.top = bubble.Ypos[i] ;
+            si[i].style.width = bubble.size[i];    //改变尺寸
+            si[i].style.height = bubble.size[i];
+            console.log(bubble.Ypos[i]);//组四行放怀
+            bubble.size[i] += bubble.sizegrow[i];
+            bubble.angle[i] += bubble.anglegrow[i];
+            if (bubble.size[i] > 24) bubble.size[i] = 25;
+          }
+            setTimeout('MouseBubbles()', 15);
+  }
+  MouseBubbles();
+
+  </script>
+<body>
+
+  <div id="kaitou">
+<center>走进镇远</center>
+</div>
+<div id="didianjianjie">
+    <span>地点简介：</span><br><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;镇远古镇是贵州省黔东南苗族侗族自治州<br><br>镇远县名镇，位于舞阳河畔，四周皆山。河水蜿蜒，<br><br>以“S”形穿城而过，北岸为旧府城，南岸为旧卫城，远<br><br>观颇似太极图。两城池皆为明代所建，现尚存部分城墙和<br><br>城门。城内外古建筑、传统民居、历史码头数量颇多。镇<br><br>远古镇交通方便区位优越，湘黔铁路、株六复线、320国<br><br>道、沪昆高速公路穿境而过，距铜仁、湖南芷江和贵飞机<br><br>场分别为90公里、170公里、270公里。县境东界湖南新<br><br>晃，南临三穗、剑河，西毗施秉，北接岑巩和铜仁地区的<br><br>  石阡，素有"滇楚锁钥、黔东门户"之称。镇远历史悠久，<br><br>自秦昭王30年（公元前277年）设县开始至今已有2281<br><br>年的历史，其元代清代为道、府所在地达700多年之久。
+</div>
+<div id="didianjianjietupian">
+
+</div>
+<div id="shishujizai">
+<span>史书记载：</span><br><br><br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;镇远古称“竖眼大田溪洞”，属“鬼方”。从夏到商，世<br><br>居着荆、梁二州的西南，称“荆蛮”。追本溯源，古代的<br><br>镇远，地处历史上“五溪蛮”和“百越人”聚居的结合<br><br>部。 宋宝佑六年（公元1258年）十一月筑黄平城，赐名<br><br>镇远州，为镇远之名的开始。
+德祐元年（公元1275年）<br><br>置镇远沿边溪洞招讨使司。元至元二十年（公元1283<br><br>年）改沿边溪洞招讨司为总管府，至正二年（公元1365<br><br>年）为府。 明洪武四年（公元1371年）改为州，永乐<br><br>十一年（公元1412年）为镇远府，正统三年（1438年）<br><br>五月革镇远州，弘治十一年（公元1446年）置镇远县，<br><br>隶镇远府，万历二十九年（公元1601年）改镇远卫。
+清<br><br>康熙二十二年（公元1683年）将卫并入县。
+宣统元年<br><br>（公元1909年）省县，以其地为府直辖，1913年恢复置<br><br>县。镇远素有“滇楚锁钥，黔东门户”之称，史书云：欲<br><br>据滇楚，必占镇远；欲通云贵，先守镇远。因地处交通要<br><br>道，地势险要，据之非常重要，故名。据《贵州通志》<br><br>392页载：“宋理宗宝祜六年(1258年)，十一月。宋诏：<br><br>新筑黄平，赐名镇远州，吕逢年晋一秩。”镇远之名始于此。
+</div>
+<div id="shishujizaitupian">
+
+</div>
+<div id="shishujizai1">
+<div id="B">
+<span>地理环境：</span><br><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;镇远古镇隶属贵州省黔东南苗族侗族自治<br><br>系上游和贵州东南部，处于贵州高原东部武陵山余脉的崇<br><br>山峻岭之中。地处湘黔两省的怀化、铜仁和黔东南三地区<br><br>五县接壤交汇之处，是一座古老而又年轻的城市。全镇属<br><br>于中亚热带季风温润气候区，一年四季气候分明，冬无严<br><br>寒，夏无酷暑，春秋温煦。年平均气温为16.4℃。月平均<br><br>气温以7月为最高，为26.6℃。元月最低，为5.2℃。<br><br><br><br>
+    <span>景区形式：</span><br><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;古民居： 镇远古民居既有江南庭院的风<br><br>貌，又有山地建筑的布局，这种江南与山的的完美结合<br><br>，使镇远的民居建筑的布局，这种江南与山地的完美结合<br><br>，使镇远的名居成为中国建筑史上的奇迹。其中“歪门邪<br><br>道”是镇远的民居建筑中独具特色之处。<br><br><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;古巷道：
+    镇远古城古巷道狭长幽深，其结<br><br>构错综复杂，有石牌坊巷、四方井享、复兴享、仁寿巷<br><br>、冲子巷、米码头巷、紫宝阁巷、陈家井巷。这些交叉衔<br><br>连、互相达通的巷子，组成了镇远古城生生相息的血脉<br><br>。古井遍布全程、形状各异、有圆有方。有的形如猪槽<br><br>，有清澈见地的自然浅井，也有深达余丈的吊井。较有名<br><br>的四方井、猪槽井、琵琶井、陈家井、园觉井、南门沟味<br><br>井等。古井春夏秋冬盛泽不涸。
+    </div>
+    <div id="A">
+
+    </div>
+    <div id="C">
+
+    </div>
+</div>
+
+<div id="shishujizaitupian1">
+
+</div>
+
+<div id="shishujizaitupian2">
+
+</div>
+</body>
+
+</html>
